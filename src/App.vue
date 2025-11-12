@@ -84,9 +84,9 @@ onMounted(() => {
           </a>
         </div>
 
-        <button class="border border-korus-navy px-4 py-1.5 text-korus-navy font-inter text-xs hover:bg-korus-navy hover:text-korus-beige transition-colors">
+        <a href="https://app.korusai.co" target="_blank" rel="noopener noreferrer" class="border border-korus-navy px-4 py-1.5 text-korus-navy font-inter text-xs hover:bg-korus-navy hover:text-korus-beige transition-colors inline-block">
           Log In
-        </button>
+        </a>
       </div>
     </nav>
 
@@ -109,7 +109,7 @@ onMounted(() => {
 
         <div class="relative w-full h-[400px] md:h-[500px] lg:h-[669px]">
           <img
-            src="/image_header.svg"
+            src="/photography/image_header.svg"
             alt="Professional workspace"
             class="w-full h-full object-contain"
           />
@@ -174,7 +174,7 @@ onMounted(() => {
       </div>
 
       <img
-        src="/yellow-lines-welcome.svg"
+        src="/lines/yellow-lines-welcome.svg"
         alt="Decorative pattern"
         class="w-full max-w-3xl absolute bottom-0 left-0 z-0"
       />
@@ -287,7 +287,7 @@ onMounted(() => {
         
         <div class="text-center mt-14">
           <p class="font-inter text-lg text-korus-navy max-w-md mx-auto mb-8">
-            Automatiza tus procesos legales y libera tiempo para lo que realmente importa. Agenda una demo hoy
+            Automatiza tus procesos legales y libera tiempo para lo que realmente importa. Agenda un demo hoy
           </p>
           <button class="bg-korus-navy text-korus-beige px-6 py-4 text-lg font-inter hover:opacity-90 transition-opacity">
             Solicita Demo
