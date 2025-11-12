@@ -37,6 +37,9 @@ const prevSlide = () => {
 }
 
 onMounted(() => {
+  // Scroll to top on page load
+  window.scrollTo(0, 0)
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -120,8 +123,8 @@ onMounted(() => {
     <!-- Welcome Section -->
     <section class="bg-korus-cyan relative overflow-hidden">
       <div class="max-w-6xl mx-auto px-8 md:px-12 py-16 md:py-24 lg:py-32 relative z-10">
-        <h2 class="font-noto-serif text-2xl md:text-3xl lg:text-4xl font-light italic text-korus-navy leading-tight mb-12 md:mb-16 tracking-tight fade-in-scroll">
-          Optimizamos procesos legales con inteligencia artificial para que el trabajo deje de ser repetitivo y vuelva a ser estratégico
+        <h2 class="font-noto-serif text-2xl md:text-3xl lg:text-4xl font-light text-korus-navy leading-tight mb-12 md:mb-16 tracking-tight fade-in-scroll">
+          Optimizamos procesos legales con inteligencia artificial para que el <span class="italic">trabajo deje de ser repetitivo</span> y vuelva a <span class="italic">ser estratégico</span>
         </h2>
 
         <div class="grid md:grid-cols-3 gap-8 md:gap-12 mb-12">
