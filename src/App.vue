@@ -1,8 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+
+interface Testimonial {
+  quote: string
+  author: string
+}
+
+const testimonials: Testimonial[] = [
+  {
+    quote: '"La capacidad de Korus para facilitar la revisión de grandes volúmenes de información es fundamental. En procesos como las debidas diligencias, en los cuales tenemos una carga muy alta en la revisión documental y en los cuales tenemos que ser muy precisos en la identificación de riesgos, la herramienta no solo agiliza el análisis, sino que minimiza los errores humanos, fortaleciendo la calidad y fiabilidad de nuestro trabajo final"',
+    author: '— Alejandro R., Senior Associate'
+  },
+  {
+    quote: '"Korus ha transformado completamente nuestro flujo de trabajo. Lo que antes nos tomaba semanas ahora lo completamos en días. La precisión y velocidad con la que procesa documentos legales es impresionante"',
+    author: '— María S., Legal Operations Manager'
+  },
+  {
+    quote: '"La automatización de procesos repetitivos nos ha permitido enfocarnos en el trabajo estratégico. Korus se ha convertido en una herramienta indispensable para nuestro equipo legal"',
+    author: '— Carlos M., General Counsel'
+  },
+  {
+    quote: '"La integración con nuestros sistemas existentes fue perfecta. El equipo de Korus nos acompañó en cada paso del proceso de implementación, y los resultados han superado nuestras expectativas"',
+    author: '— Ana L., Legal Tech Director'
+  }
+]
 
 const currentSlide = ref(0)
-const totalSlides = 4
+const totalSlides = testimonials.length
 
 const nextSlide = () => {
   currentSlide.value = (currentSlide.value + 1) % totalSlides
@@ -11,19 +35,40 @@ const nextSlide = () => {
 const prevSlide = () => {
   currentSlide.value = (currentSlide.value - 1 + totalSlides) % totalSlides
 }
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-visible')
+        } else {
+          entry.target.classList.remove('fade-in-visible')
+        }
+      })
+    },
+    {
+      threshold: 0.1,
+      rootMargin: '0px'
+    }
+  )
+
+  const fadeElements = document.querySelectorAll('.fade-in-scroll')
+  fadeElements.forEach((el) => observer.observe(el))
+})
 </script>
 
 <template>
   <div class="min-h-screen bg-white overflow-x-hidden">
     <!-- Navigation -->
-    <nav class="bg-korus-beige px-8 md:px-12 py-5 sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <img 
-          src="https://api.builder.io/api/v1/image/assets/TEMP/ab60605533a321ff4260ce44a01f5752527de9d1?width=178" 
-          alt="Korus logo" 
-          class="h-6 md:h-7"
+    <nav class="bg-korus-beige px-12 md:px-20 sticky top-0 z-50 h-[65px] flex items-center">
+      <div class="max-w-[1920px] w-full mx-auto flex justify-between items-center">
+        <img
+          src="/logo/logo_korus_text.svg"
+          alt="Korus logo"
+          class="h-[25px]"
         />
-        
+
         <div class="hidden md:flex items-center gap-8 lg:gap-10">
           <a href="#nosotros" class="text-korus-navy font-roboto-mono text-xs font-medium uppercase tracking-tight hover:opacity-70 transition-opacity">
             Nosotros
@@ -38,7 +83,7 @@ const prevSlide = () => {
             Solicitar Demo
           </a>
         </div>
-        
+
         <button class="border border-korus-navy px-4 py-1.5 text-korus-navy font-inter text-xs hover:bg-korus-navy hover:text-korus-beige transition-colors">
           Log In
         </button>
@@ -47,40 +92,38 @@ const prevSlide = () => {
 
     <!-- Hero Section -->
     <section class="bg-korus-beige relative overflow-hidden">
-      <div class="max-w-7xl mx-auto px-8 md:px-12 py-16 md:py-24 lg:py-32 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px] lg:min-h-[800px]">
-        <div class="flex flex-col gap-8 max-w-lg">
-          <h1 class="font-noto-serif text-4xl md:text-5xl lg:text-6xl font-light italic text-korus-navy leading-tight tracking-tight">
-            Confidencialidad y seguridad integradas.
+      <div class="w-full px-12 md:px-[50px] pt-4 md:pt-6 pb-16 md:pb-24 lg:pb-32 grid lg:grid-cols-2 gap-8 lg:gap-12 items-start min-h-[600px] lg:min-h-[800px]">
+        <div class="flex flex-col max-w-lg">
+          <h1 class="font-noto-serif text-4xl md:text-5xl lg:text-6xl font-light text-korus-navy leading-tight tracking-tight mt-16 md:mt-40">
+            Confidencialidad y <span class="italic">seguridad</span> integradas.
           </h1>
-          
-          <p class="font-inter text-xs md:text-sm text-korus-navy leading-relaxed">
+
+          <p class="font-inter text-xs md:text-sm text-korus-navy leading-relaxed mt-40 md:mt-48 mb-8 fade-in-scroll">
             Korus es una plataforma de AI para equipos legales que trabaja sobre los documentos y flujos del equipo para disminuir tareas repetitivas
           </p>
-          
-          <button class="bg-korus-navy text-korus-beige px-6 py-4 text-lg font-inter self-start hover:opacity-90 transition-opacity">
+
+          <button class="bg-korus-navy text-korus-beige px-6 h-[37px] text-lg font-inter self-start hover:opacity-90 transition-opacity flex items-center justify-center fade-in-scroll">
             Conoce más →
           </button>
         </div>
-        
+
         <div class="relative w-full h-[400px] md:h-[500px] lg:h-[669px]">
-          <div class="absolute inset-0 border-2 border-korus-navy rounded-t-[60px] overflow-hidden bg-[#619848]">
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/b7b679b97d9b608be00aae4c14ed2ddd137fe2be?width=1402" 
-              alt="Professional workspace" 
-              class="w-full h-full object-cover"
-            />
-          </div>
+          <img
+            src="/image_header.svg"
+            alt="Professional workspace"
+            class="w-full h-full object-contain"
+          />
         </div>
       </div>
     </section>
 
     <!-- Welcome Section -->
     <section class="bg-korus-cyan relative overflow-hidden">
-      <div class="max-w-6xl mx-auto px-8 md:px-12 py-16 md:py-24 lg:py-32">
-        <h2 class="font-noto-serif text-2xl md:text-3xl lg:text-4xl font-light italic text-korus-navy leading-tight mb-12 md:mb-16 tracking-tight">
+      <div class="max-w-6xl mx-auto px-8 md:px-12 py-16 md:py-24 lg:py-32 relative z-10">
+        <h2 class="font-noto-serif text-2xl md:text-3xl lg:text-4xl font-light italic text-korus-navy leading-tight mb-12 md:mb-16 tracking-tight fade-in-scroll">
           Optimizamos procesos legales con inteligencia artificial para que el trabajo deje de ser repetitivo y vuelva a ser estratégico
         </h2>
-        
+
         <div class="grid md:grid-cols-3 gap-8 md:gap-12 mb-12">
           <!-- Feature 1 -->
           <div class="flex flex-col gap-6">
@@ -124,66 +167,66 @@ const prevSlide = () => {
             </div>
           </div>
         </div>
-        
-        <button class="bg-korus-navy text-korus-beige px-6 py-4 text-lg font-inter hover:opacity-90 transition-opacity">
-          Soliciitar Demo
+
+        <button class="bg-korus-navy text-korus-beige px-6 py-4 text-lg font-inter hover:opacity-90 transition-opacity relative z-20">
+          Solicitar Demo
         </button>
       </div>
-      
-      <img 
-        src="https://api.builder.io/api/v1/image/assets/TEMP/c8ddffb89765f47b2a20e91a6a52e5fb5b3cd231?width=1459" 
-        alt="Decorative pattern" 
-        class="w-full max-w-3xl absolute bottom-0 left-0 opacity-50"
+
+      <img
+        src="/yellow-lines-welcome.svg"
+        alt="Decorative pattern"
+        class="w-full max-w-3xl absolute bottom-0 left-0 z-0"
       />
     </section>
 
     <!-- Image Breaker Section -->
     <section class="w-full">
-      <img 
-        src="https://api.builder.io/api/v1/image/assets/TEMP/5c27304c5b7943a54805b1f7fe59ea4f1063a44a?width=2560" 
-        alt="Team collaboration" 
+      <img
+        src="/photography/break_image.png"
+        alt="Team collaboration"
         class="w-full h-auto object-cover max-h-[625px]"
       />
     </section>
 
     <!-- Offering Section -->
     <section id="nosotros" class="bg-korus-cyan py-16 md:py-24 lg:py-32">
-      <div class="max-w-7xl mx-auto px-8 md:px-12">
-        <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+      <div class="w-full px-8 md:px-[50px]">
+        <div class="grid lg:grid-cols-12 gap-8 lg:gap-12">
           <div class="lg:col-span-3">
             <h2 class="font-noto-serif text-2xl md:text-3xl font-light text-korus-navy tracking-tight">
               Casos de uso
             </h2>
           </div>
-          
+
           <div class="lg:col-span-9 space-y-8">
             <div class="space-y-2">
-              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight">
+              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight fade-in-scroll">
                 Análisis de documentos
               </h3>
-              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight">
+              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight fade-in-scroll">
                 Redacción de contratos
               </h3>
-              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight">
+              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight fade-in-scroll">
                 Due Diligence
               </h3>
-              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight">
+              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight fade-in-scroll">
                 Análisis de audios
               </h3>
-              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight">
+              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight fade-in-scroll">
                 Automatización de procesos
               </h3>
-              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight">
+              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight fade-in-scroll">
                 Redacción de textos
               </h3>
-              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight">
+              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight fade-in-scroll">
                 Extracción de información
               </h3>
-              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight text-korus-sun">
+              <h3 class="font-noto-serif text-4xl md:text-5xl lg:text-7xl font-light text-korus-navy leading-tight tracking-tight text-korus-sun fade-in-scroll">
                 +Más
               </h3>
             </div>
-            
+
             <button class="bg-korus-beige text-korus-navy px-6 py-4 text-lg font-inter rounded-lg hover:opacity-90 transition-opacity mt-12">
               Services
             </button>
@@ -206,12 +249,16 @@ const prevSlide = () => {
         
         <div class="bg-gray-100 p-8 md:p-12 lg:p-16 rounded-sm min-h-[445px] flex flex-col justify-center gap-20">
           <div class="text-center">
-            <p class="font-noto-serif text-xl md:text-2xl lg:text-3xl font-light text-korus-navy italic leading-tight mb-8 tracking-tight">
-              "La capacidad de Korus para facilitar la revisión de grandes volúmenes de información es fundamental. En procesos como las debidas diligencias, en los cuales tenemos una carga muy alta en la revisión documental y en los cuales tenemos que ser muy precisos en la identificación de riesgos, la herramienta no solo agiliza el análisis, sino que minimiza los errores humanos, fortaleciendo la calidad y fiabilidad de nuestro trabajo final"
-            </p>
-            <p class="font-noto-serif text-xl md:text-2xl lg:text-3xl font-light text-korus-navy tracking-tight">
-              — Alejandro R., Senior Associate
-            </p>
+            <transition name="testimonial-fade" mode="out-in">
+              <div :key="currentSlide">
+                <p class="font-noto-serif text-xl md:text-2xl lg:text-3xl font-light text-korus-navy italic leading-tight mb-8 tracking-tight">
+                  {{ testimonials[currentSlide].quote }}
+                </p>
+                <p class="font-noto-serif text-xl md:text-2xl lg:text-3xl font-light text-korus-navy tracking-tight">
+                  {{ testimonials[currentSlide].author }}
+                </p>
+              </div>
+            </transition>
           </div>
           
           <div class="flex justify-center items-center gap-5">
@@ -251,7 +298,7 @@ const prevSlide = () => {
 
     <!-- Security Section -->
     <section id="seguridad" class="bg-korus-cyan py-16 md:py-24 lg:py-32">
-      <div class="max-w-6xl mx-auto px-8 md:px-12">
+      <div class="w-full px-[150px]">
         <div class="grid md:grid-cols-2 gap-12 mb-24">
           <h2 class="font-noto-serif text-4xl md:text-5xl lg:text-6xl font-light text-korus-navy leading-tight tracking-tight">
             Tus datos siempre están protegidos
@@ -260,55 +307,60 @@ const prevSlide = () => {
             En Korus, la seguridad es fundamental. Nuestra plataforma está diseñada con protecciones sólidas para manejar la información legal más sensible
           </p>
         </div>
-        
+
         <div class="grid md:grid-cols-3 gap-5 mb-16">
-          <div class="border-l-2 border-korus-navy pl-8 md:pl-12 py-5 space-y-7">
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/50005fce2cb23dbe416128684a9c73ac463962c2?width=57" 
-              alt="Lock icon" 
+          <div class="border-l border-korus-navy pl-8 md:pl-12 py-5 space-y-7">
+            <img
+              src="/icons/Lock.svg"
+              alt="Lock icon"
               class="w-7 h-7"
             />
-            <h3 class="font-work-sans text-2xl md:text-3xl text-korus-navy tracking-tight">
+            <h3 class="font-inter text-2xl md:text-3xl text-korus-navy tracking-tight min-h-[72px]">
               Infraestructura Segura
             </h3>
-            <p class="font-work-sans text-sm text-korus-navy tracking-tight">
+            <p class="font-inter text-sm text-korus-navy tracking-tight">
               Simplicity & Control
             </p>
-            <p class="font-work-sans text-base text-korus-navy leading-tight tracking-tight">
+            <p class="font-inter text-base text-korus-navy leading-tight tracking-tight">
               Toda la información ingresada está bajo el mismo estándar de seguridad bancaria
             </p>
           </div>
-          
-          <div class="border-l-2 border-korus-navy pl-8 md:pl-12 py-5 space-y-7">
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/d2d6bbdaab1caf747293c00df0bceeb0e2b5f8e3?width=773" 
-              alt="Privacy icon" 
-              class="w-full h-auto object-cover"
+
+          <div class="border-l border-korus-navy pl-8 md:pl-12 py-5 space-y-7">
+            <img
+              src="/icons/Person.svg"
+              alt="Privacy icon"
+              class="w-7 h-7"
             />
-          </div>
-          
-          <div class="border-l-2 border-korus-navy pl-8 md:pl-12 py-5 space-y-7">
-            <svg class="w-7 h-7" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_95_1507)">
-                <path d="M25.0112 4.28762C25.4059 4.28762 25.7259 3.96768 25.7259 3.57301C25.7259 3.17834 25.4059 2.8584 25.0112 2.8584C24.6166 2.8584 24.2966 3.17834 24.2966 3.57301C24.2966 3.96768 24.6166 4.28762 25.0112 4.28762Z" fill="#161A79"/>
-                <path d="M23.582 5.71682C23.9767 5.71682 24.2967 5.39688 24.2967 5.00221C24.2967 4.60754 23.9767 4.2876 23.582 4.2876C23.1874 4.2876 22.8674 4.60754 22.8674 5.00221C22.8674 5.39688 23.1874 5.71682 23.582 5.71682Z" fill="#161A79"/>
-                <path d="M26.4404 5.71682C26.8351 5.71682 27.155 5.39688 27.155 5.00221C27.155 4.60754 26.8351 4.2876 26.4404 4.2876C26.0458 4.2876 25.7258 4.60754 25.7258 5.00221C25.7258 5.39688 26.0458 5.71682 26.4404 5.71682Z" fill="#161A79"/>
-                <path d="M22.1528 7.14602C22.5475 7.14602 22.8675 6.82608 22.8675 6.43141C22.8675 6.03674 22.5475 5.7168 22.1528 5.7168C21.7582 5.7168 21.4382 6.03674 21.4382 6.43141C21.4382 6.82608 21.7582 7.14602 22.1528 7.14602Z" fill="#161A79"/>
-                <path d="M27.8696 7.14602C28.2643 7.14602 28.5842 6.82608 28.5842 6.43141C28.5842 6.03674 28.2643 5.7168 27.8696 5.7168C27.475 5.7168 27.155 6.03674 27.155 6.43141C27.155 6.82608 27.475 7.14602 27.8696 7.14602Z" fill="#161A79"/>
-              </g>
-            </svg>
-            <h3 class="font-work-sans text-2xl md:text-3xl text-korus-navy tracking-tight">
-              Compromiso con cumplimiento
+            <h3 class="font-inter text-2xl md:text-3xl text-korus-navy tracking-tight min-h-[72px]">
+              Privacidad y control de datos
             </h3>
-            <p class="font-work-sans text-sm text-korus-navy tracking-tight">
+            <p class="font-inter text-sm text-korus-navy tracking-tight">
               Stability & Security
             </p>
-            <p class="font-work-sans text-base text-korus-navy leading-tight tracking-tight">
+            <p class="font-inter text-base text-korus-navy leading-tight tracking-tight">
+              No entrenamos modelos de IA con información del cliente, ésta permanece privada en todo momento
+            </p>
+          </div>
+
+          <div class="border-l border-korus-navy pl-8 md:pl-12 py-5 space-y-7">
+            <img
+              src="/icons/Check.svg"
+              alt="Compliance icon"
+              class="w-7 h-7"
+            />
+            <h3 class="font-inter text-2xl md:text-3xl text-korus-navy tracking-tight min-h-[72px]">
+              Compromiso con cumplimiento
+            </h3>
+            <p class="font-inter text-sm text-korus-navy tracking-tight">
+              Stability & Security
+            </p>
+            <p class="font-inter text-base text-korus-navy leading-tight tracking-tight">
               Cumplimos al máximo normativas locales e internacionales de protección de datos
             </p>
           </div>
         </div>
-        
+
         <button id="demo" class="bg-korus-navy text-korus-beige px-6 py-4 text-lg font-inter hover:opacity-90 transition-opacity">
           Solicita Demo
         </button>
@@ -319,7 +371,7 @@ const prevSlide = () => {
     <footer class="bg-korus-beige px-8 md:px-12 lg:px-24 py-16 space-y-16">
       <div class="max-w-7xl mx-auto">
         <img 
-          src="https://api.builder.io/api/v1/image/assets/TEMP/0c0253450ae4bed9a2783204a0f24c6573cfb63b?width=234" 
+          src="/logo/logo_korus_text.svg"
           alt="Korus logo" 
           class="h-8 mb-16"
         />
@@ -336,10 +388,10 @@ const prevSlide = () => {
           </div>
           
           <div class="space-y-1">
-            <a href="#" class="font-inter text-sm text-korus-navy underline block hover:opacity-70">
+            <a href="es/politica-privacidad" class="font-inter text-sm text-korus-navy underline block hover:opacity-70">
               Política de Privacidad
             </a>
-            <a href="#" class="font-inter text-sm text-korus-navy underline block hover:opacity-70">
+            <a href="es/terminos-y-condiciones" class="font-inter text-sm text-korus-navy underline block hover:opacity-70">
               Términos y Condiciones
             </a>
             <a href="#" class="font-inter text-sm text-korus-navy underline block hover:opacity-70">
@@ -354,9 +406,9 @@ const prevSlide = () => {
           </p>
           
           <div class="flex items-center gap-6">
-            <a href="#" class="hover:opacity-70 transition-opacity">
-              <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.06598 8.9878L8.60518 6.05157H5.46667V5.01311C5.46667 3.46144 6.07539 2.86467 7.65093 2.86467C8.14032 2.86467 8.53419 2.87659 8.76099 2.90045V0.238761C8.3313 0.119385 7.28092 5.72205e-06 6.6722 5.72205e-06C3.46144 5.72205e-06 1.98137 1.5159 1.98137 4.78635V6.05157H0V8.9878H1.98137V15.3772C2.7248 15.5616 3.50214 15.6602 4.30257 15.6602C4.69668 15.6602 5.08502 15.6359 5.46667 15.5898V8.9878H8.06598Z" fill="#161A79"/>
+            <a href="https://www.linkedin.com/company/korusai/" target="_blank" rel="noopener noreferrer" class="hover:opacity-70 transition-opacity">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.6333 0H2.36667C1.05889 0 0 1.05889 0 2.36667V13.6333C0 14.9411 1.05889 16 2.36667 16H13.6333C14.9411 16 16 14.9411 16 13.6333V2.36667C16 1.05889 14.9411 0 13.6333 0ZM5.33333 13.6333H2.66667V5.33333H5.33333V13.6333ZM4 4.41111C3.15556 4.41111 2.47778 3.73333 2.47778 2.88889C2.47778 2.04444 3.15556 1.36667 4 1.36667C4.84444 1.36667 5.52222 2.04444 5.52222 2.88889C5.52222 3.73333 4.84444 4.41111 4 4.41111ZM13.6333 13.6333H10.9667V9.6C10.9667 8.57778 10.9444 7.26667 9.54444 7.26667C8.12222 7.26667 7.91111 8.37778 7.91111 9.52222V13.6333H5.24444V5.33333H7.8V6.53333H7.83333C8.2 5.83333 9.06667 5.1 10.3667 5.1C13.0667 5.1 13.6333 6.88889 13.6333 9.17778V13.6333Z" fill="#161A79"/>
               </svg>
             </a>
             <a href="#" class="hover:opacity-70 transition-opacity">
